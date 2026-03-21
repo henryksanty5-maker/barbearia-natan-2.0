@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Variáveis de Cores (Estilo Dark/Premium) */
         :root {
             --bg-dark: #0f0f0f;
             --bg-lighter: #1a1a1a;
@@ -22,7 +21,6 @@
             --white: #ffffff;
         }
 
-        /* Reset Básico */
         * {
             margin: 0;
             padding: 0;
@@ -42,12 +40,20 @@
             color: var(--white);
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        a { text-decoration: none; color: inherit; }
+
+        /* Classes de Animação (Imersão) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Botões */
         .btn {
             display: inline-block;
             background-color: var(--gold);
@@ -57,7 +63,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             border-radius: 3px;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s;
             border: none;
             cursor: pointer;
         }
@@ -65,6 +71,7 @@
         .btn:hover {
             background-color: var(--gold-hover);
             color: var(--white);
+            transform: scale(1.05);
         }
 
         .btn-outline {
@@ -78,7 +85,6 @@
             color: var(--bg-dark);
         }
 
-        /* Navbar */
         header {
             position: fixed;
             width: 100%;
@@ -90,228 +96,128 @@
             align-items: center;
             z-index: 1000;
             border-bottom: 1px solid #333;
+            transition: padding 0.3s;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             letter-spacing: 2px;
             color: var(--gold);
-        }
-
-        nav ul {
-            list-style: none;
             display: flex;
-            gap: 30px;
+            align-items: center;
+            gap: 10px;
         }
 
-        nav ul li a {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+        /* Se você tiver uma logo em imagem, descomente e ajuste a tag img abaixo no HTML */
+        .logo img { height: 40px; }
+
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul li a { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        nav ul li a:hover { color: var(--gold); }
+
+        /* Animação Hero Zoom Lento */
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
-        nav ul li a:hover {
-            color: var(--gold);
-        }
-
-        /* Hero Section (Primeira Dobra) */
-        .hero {
+        .hero-container {
+            position: relative;
             height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.29.00.jpeg') center/cover;
+            animation: slowZoom 20s infinite alternate linear;
+            z-index: -1;
+        }
+
+        .hero-content {
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            margin-top: 60px; /* Compensa o header fixo */
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
+        .hero-content h1 { font-size: 4rem; margin-bottom: 20px; text-transform: uppercase; }
+        .hero-content p { font-size: 1.2rem; max-width: 600px; margin-bottom: 40px; color: #ccc; }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 40px;
-            color: #ccc;
-        }
+        .section { padding: 100px 10%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--gold); }
 
-        /* Seções Gerais */
-        .section {
-            padding: 100px 10%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: var(--gold);
-        }
-
-        /* Sobre (A História) */
-        .about {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            background-color: var(--bg-lighter);
-        }
-
+        .about { display: flex; align-items: center; gap: 50px; background-color: var(--bg-lighter); }
         .about-img {
             flex: 1;
-            height: 400px;
-            background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+            height: 450px;
+            background: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.47.07.jpeg') center/cover;
             border-radius: 5px;
-            border: 3px solid #333;
+            box-shadow: -15px 15px 0px var(--gold);
+            transition: transform 0.5s ease;
         }
+        .about-img:hover { transform: translateY(-10px); }
 
-        .about-text {
-            flex: 1;
-        }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 2.2rem; margin-bottom: 20px; }
+        .about-text p { margin-bottom: 20px; font-size: 1.1rem; }
 
-        .about-text h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        /* Serviços */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .service-card {
-            background-color: var(--bg-lighter);
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid #333;
-            border-radius: 5px;
-            transition: transform 0.3s, border-color 0.3s;
+            background-color: var(--bg-lighter); padding: 40px 30px; text-align: center;
+            border: 1px solid #333; border-radius: 5px; transition: transform 0.3s, border-color 0.3s;
         }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        .service-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; }
+        .service-card h3 { margin-bottom: 15px; font-size: 1.5rem; }
 
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-        }
-
-        .service-card i {
-            font-size: 3rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        /* Galeria */
-        .gallery {
-            background-color: var(--bg-lighter);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
+        .gallery { background-color: var(--bg-dark); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
         .gallery-item {
-            height: 300px;
+            height: 350px;
             background-color: #333;
             background-size: cover;
             background-position: center;
             border-radius: 5px;
-            transition: filter 0.3s;
-        }
-
-        .gallery-item:hover {
-            filter: brightness(1.2);
-        }
-
-        /* Footer / Contato */
-        footer {
-            background-color: #050505;
-            padding: 60px 10%;
-            display: flex;
-            justify-content: space-between;
-            gap: 40px;
-            border-top: 1px solid #222;
-        }
-
-        .footer-info {
-            flex: 1;
-        }
-
-        .footer-info h3 {
-            color: var(--gold);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-
-        .footer-info p {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-info i {
-            color: var(--gold);
-            width: 20px;
-        }
-
-        .social-links {
-            margin-top: 30px;
-        }
-
-        .social-links a {
-            display: inline-block;
-            margin-right: 15px;
-            font-size: 1.5rem;
-            color: var(--white);
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: var(--gold);
-        }
-
-        .footer-map {
-            flex: 1;
-            border: 2px solid #333;
-            border-radius: 5px;
             overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
         }
 
-        .copyright {
-            text-align: center;
-            padding: 20px;
-            background-color: #000;
-            font-size: 0.9rem;
-            color: #666;
-        }
+        .gallery-item:hover { transform: scale(1.03); z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .gallery-item:hover::after { background: transparent; }
 
-        /* Responsividade para Celulares */
+        footer { background-color: #050505; padding: 60px 10%; display: flex; justify-content: space-between; gap: 40px; border-top: 1px solid #222; }
+        .footer-info { flex: 1; }
+        .footer-info h3 { color: var(--gold); margin-bottom: 20px; font-size: 1.8rem; }
+        .footer-info p { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .footer-info i { color: var(--gold); width: 20px; }
+        .social-links { margin-top: 30px; }
+        .social-links a { display: inline-block; margin-right: 15px; font-size: 1.5rem; color: var(--white); transition: color 0.3s; }
+        .social-links a:hover { color: var(--gold); transform: translateY(-3px); }
+        .footer-map { flex: 1; border: 2px solid #333; border-radius: 5px; overflow: hidden; height: 300px;}
+        .copyright { text-align: center; padding: 20px; background-color: #000; font-size: 0.9rem; color: #666; }
+
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 15px; }
             nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            .hero h1 { font-size: 2.5rem; }
+            .hero-content h1 { font-size: 2.5rem; }
             .about { flex-direction: column; }
-            .about-img { width: 100%; height: 300px; }
+            .about-img { width: 100%; height: 300px; box-shadow: -10px 10px 0px var(--gold); }
             footer { flex-direction: column; }
-            .footer-map { height: 300px; }
         }
     </style>
 </head>
@@ -329,17 +235,20 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Tradição, Estilo e Respeito</h1>
-        <p>A verdadeira experiência da barbearia clássica no coração de São Luiz do Paraitinga. Eleve seu visual com quem entende do assunto.</p>
-        <a href="https://wa.me/5512999999999?text=Olá,%20gostaria%20de%20agendar%20um%20horário!" class="btn" target="_blank">
-            <i class="fab fa-whatsapp"></i> Agendar Meu Horário
-        </a>
+    <section class="hero-container">
+        <div class="hero-bg"></div>
+        <div class="hero-content reveal">
+            <h1>Tradição, Estilo e Respeito</h1>
+            <p>A verdadeira experiência da barbearia clássica no coração de São Luiz do Paraitinga. Eleve seu visual com quem entende do assunto.</p>
+            <a href="https://wa.me/5512999999999?text=Olá,%20gostaria%20de%20agendar%20um%20horário!" class="btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> Agendar Meu Horário
+            </a>
+        </div>
     </section>
 
     <section id="sobre" class="section about">
-        <div class="about-img"></div>
-        <div class="about-text">
+        <div class="about-img reveal"></div>
+        <div class="about-text reveal">
             <h2>Muito Mais que um Corte.<br>Um Ritual.</h2>
             <p>A Empório Barbearia nasceu para resgatar a essência do que é ser bem atendido. Sob o comando de Natan, combinamos a herança da barbearia "Old School" com as técnicas mais modernas de visagismo masculino.</p>
             <p>Nosso espaço foi pensado para ser o seu momento de pausa: onde você senta, relaxa, troca uma boa ideia e sai com a autoestima no máximo. Não é apenas sobre cabelo e barba, é sobre fazer você se sentir único.</p>
@@ -347,39 +256,42 @@
     </section>
 
     <section id="servicos" class="section">
-        <h2 class="section-title">Estilo Sob Medida</h2>
+        <h2 class="section-title reveal">Estilo Sob Medida</h2>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card reveal">
                 <i class="fas fa-cut"></i>
                 <h3>Cabelo Clássico & Moderno</h3>
                 <p>Cortes na tesoura, degradês impecáveis e finalização com produtos premium. Alinhado ao seu estilo.</p>
             </div>
-            <div class="service-card">
-                <i class="fas fa-wind"></i> <h3>Barba Terapia Old School</h3>
+            <div class="service-card reveal">
+                <i class="fas fa-wind"></i>
+                <h3>Barba Terapia Old School</h3>
                 <p>Toalha quente, espuma densa e navalha. O alinhamento perfeito para valorizar o formato do seu rosto.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal">
                 <i class="fas fa-handshake"></i>
                 <h3>O Combo (Cabelo + Barba)</h3>
                 <p>O trato completo para quem não abre mão do visual 100% alinhado. A experiência máxima da Empório.</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 50px;">
+        <div style="text-align: center; margin-top: 50px;" class="reveal">
             <a href="https://wa.me/5512999999999" class="btn btn-outline" target="_blank">Consultar Valores e Agendar</a>
         </div>
     </section>
 
     <section id="galeria" class="section gallery">
-        <h2 class="section-title">A Arte em Detalhes</h2>
+        <h2 class="section-title reveal">A Arte em Detalhes</h2>
         <div class="gallery-grid">
-            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?auto=format&fit=crop&w=500&q=80');"></div>
-            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=500&q=80');"></div>
-            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=500&q=80');"></div>
-            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=500&q=80');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.29.18.jpeg');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.29.53.jpeg');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.33.03%20(1).jpeg');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.34.39.jpeg');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.35.37%20(1).jpeg');"></div>
+            <div class="gallery-item reveal" style="background-image: url('https://raw.githubusercontent.com/henryksanty5-maker/barbearia-natan-2.0/main/assets/WhatsApp%20Image%202026-03-20%20at%2017.47.08%20(2).jpeg');"></div>
         </div>
     </section>
 
-    <footer id="contato">
+    <footer id="contato" class="reveal">
         <div class="footer-info">
             <h3>Venha Tomar um Café</h3>
             <p><i class="fas fa-map-marker-alt"></i> Rua Elpídio dos Santos, 77<br>São Luiz do Paraitinga, SP - 12140-000</p>
@@ -393,14 +305,15 @@
         </div>
         
         <div class="footer-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3674.3986884149363!2d-45.3129321!3d-23.2201314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cc70f9b6b7582b%3A0x6b2e3e6b5d6f4b3!2sR.%20Elp%C3%ADdio%20dos%20Santos%2C%2077%20-%20S%C3%A3o%20Lu%C3%ADz%20do%20Paraitinga%2C%20SP%2C%2012140-000!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://maps.google.com/maps?q=Rua%20Elp%C3%ADdio%20dos%20Santos,%2077,%20S%C3%A3o%20Luiz%20do%20Paraitinga&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </footer>
     <div class="copyright">
-        &copy; 2026 Empório Barbearia. Todos os direitos reservados.
+        © 2026 Empório Barbearia. Todos os direitos reservados.
     </div>
 
     <script>
+        // Rolagem suave dos links do menu
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -409,6 +322,23 @@
                 });
             });
         });
+
+        // Efeito de Revelação (Fade-in) ao rolar a página
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Opcional: Descomente a linha abaixo se quiser que a animação aconteça apenas uma vez
+                    // revealObserver.unobserve(entry.target); 
+                }
+            });
+        }, {
+            threshold: 0.15 // O elemento aparece quando 15% dele estiver visível na tela
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
